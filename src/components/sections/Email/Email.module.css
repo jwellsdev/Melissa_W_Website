@@ -1,0 +1,95 @@
+.emailRow {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+}
+
+.emailForm {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem; /* even spacing between input + button */
+}
+
+.emailForm {
+  flex: 1; /* input side grows */
+  min-width: 0; /* prevents overflow */
+}
+
+.emailInput {
+  flex: 1; /* fills remaining space */
+  padding: 0.9rem 1.1rem;
+  border-radius: 999px;
+  border: none;
+  font-size: 0.95rem;
+  background: #fff;
+  color: var(--color-text-main);
+  text-align: center;
+}
+
+.emailInput {
+  flex: 1;
+  min-width: 0;
+}
+
+.emailLabel {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  justify-content: center; /* centers label + input as a group */
+}
+
+.emailButton {
+  padding: 0.9rem 1.75rem;
+  border-radius: 999px;
+  border: none;
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #ff8fa3, #f6b27a);
+  color: white;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.emailButton {
+  flex: 0 0 auto; /* button keeps its size */
+}
+
+/* @media (max-width: 768px) {
+  .emailLayout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .emailForm {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .emailButton {
+    width: 100%;
+    text-align: center;
+  }
+} */
+
+/* Mobile: stack input + button */
+@media (max-width: 768px) {
+  .emailRow {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .emailLabel {
+    justify-content: flex-start;
+  }
+
+  .emailButton {
+    width: 100%;
+  }
+}

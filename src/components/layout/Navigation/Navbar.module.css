@@ -1,0 +1,305 @@
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  backdrop-filter: blur(16px);
+  background: rgba(255, 250, 247, 0.9);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+.navbarInner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  /* gap: 1.5rem; */
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+.logoMark {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 20%, #ffeef5, #f38aa9);
+  box-shadow: var(--shadow-subtle);
+  overflow: hidden;
+}
+
+/* .logoImg {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto;
+} */
+
+.logoImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.logoText {
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+}
+
+.logoSub {
+  display: block;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--color-text-muted);
+}
+
+/* Desktop nav */
+/* .navDesktop {
+  display: none;
+  gap: 1.5rem;
+  align-items: center;
+} */
+
+.navLink {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--color-text-muted);
+  padding: 0.25rem 0;
+  border-bottom: 2px solid transparent;
+  transition: color 0.16s ease, border-color 0.16s ease;
+}
+
+.navLink:hover {
+  color: var(--color-text-main);
+  border-color: var(--color-primary-soft);
+}
+
+.navCta {
+  padding: 0.45rem 1.3rem;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(135deg, #f38aa9, #f3b27d);
+  color: #ffffff;
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  box-shadow: var(--shadow-soft);
+}
+
+/* Mobile toggle */
+.navToggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  border: 1px solid var(--color-border-subtle);
+  background: #ffffff;
+  cursor: pointer;
+  box-shadow: var(--shadow-subtle);
+}
+
+.navToggleBar,
+.navToggleBar::before,
+.navToggleBar::after {
+  display: block;
+  width: 16px;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--color-text-main);
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  content: "";
+}
+
+.navToggleBar {
+  position: relative;
+}
+
+.navToggleBar::before {
+  position: absolute;
+  top: -5px;
+}
+
+.navToggleBar::after {
+  position: absolute;
+  top: 5px;
+}
+
+/* Drawer panel */
+.navDrawer {
+  border-top: 1px solid rgba(255, 255, 255, 0.8);
+  background: #fffaf7;
+  box-shadow: 0 12px 40px rgba(15, 23, 42, 0.07);
+}
+
+.navList {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0.75rem 1.5rem 1rem;
+  list-style: none;
+}
+
+.navItem {
+  position: relative;
+}
+
+/* Top-level rows (About, Social, etc.) */
+.navDrawerLink {
+  width: 100%;
+  padding: 0.6rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  background: transparent;
+  border-radius: 0;
+  cursor: pointer;
+  /* IMPORTANT: remove native <button> border */
+  border: none;
+  outline: none;
+  border-bottom: none; /* remove default divider */
+}
+
+.navDrawerLink:hover {
+  color: var(--color-text-main);
+}
+
+/* Chevron on items with submenu */
+/* .navItemHasSub .navItemChevron {
+  margin-left: 0.5rem;
+  font-size: 0.7rem;
+} */
+
+/* Add divider only to NORMAL items */
+/* .navItem:not(.navItemHasSub) .navDrawerLink {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+} */
+
+/* Submenu base */
+.navSubmenu {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0.4rem 0.5rem;
+  display: none;
+}
+
+/* When open (via state) */
+.navItemOpen .navSubmenu {
+  display: block;
+}
+
+.navItemHasSub .navDrawerLink:hover {
+  color: var(--color-text-main);
+  opacity: 0.9;
+}
+
+/* Show on hover for pointer devices */
+@media (hover: hover) {
+  .navItemHasSub:hover .navSubmenu {
+    display: block;
+  }
+}
+
+.navSubmenuLink {
+  display: block;
+  padding: 0.3rem 0;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: none;
+  color: var(--color-text-muted);
+  text-decoration: none;
+}
+
+.navSubmenuLink:hover {
+  color: var(--color-text-main);
+}
+
+/* Remove old desktop-only behavior */
+.navDesktop {
+  display: none;
+}
+
+/* .navToggleBar {
+  width: 16px;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--color-text-main);
+  position: relative;
+}
+
+.navToggleBar::before,
+.navToggleBar::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 16px;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--color-text-main);
+}
+
+.navToggleBar::before {
+  top: -5px;
+}
+
+.navToggleBar::after {
+  top: 5px;
+} */
+
+/* Drawer */
+/* .navDrawer {
+  position: fixed;
+  top: 64px;
+  left: 0;
+  right: 0;
+  padding: 1rem 1.25rem 1.5rem;
+  background: #ffffff;
+  box-shadow: 0 16px 35px rgba(0, 0, 0, 0.12);
+  border-radius: 0 0 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.navDrawerLink {
+  font-size: 0.9rem;
+  padding: 0.6rem 0.4rem;
+  border-radius: 999px;
+  background: #faf5f2;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+} */
+
+/* Responsive */
+/* @media (min-width: 768px) {
+  .navToggle {
+    display: none;
+  }
+
+  .navDesktop {
+    display: flex;
+  }
+
+  .navDrawer {
+    display: none;
+  }
+} */
