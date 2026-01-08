@@ -1,3 +1,11 @@
+.formStack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  width: 100%;
+}
+
 .emailRow {
   width: 100%;
   max-width: 900px;
@@ -9,16 +17,21 @@
   gap: 1.25rem;
 }
 
-.emailForm {
+/* .emailForm {
   width: 100%;
   display: flex;
   align-items: center;
-  gap: 1.25rem; /* even spacing between input + button */
+  gap: 1.25rem;
+} */
+
+.emailForm {
+  flex: 1;
+  min-width: 0;
 }
 
 .emailForm {
-  flex: 1; /* input side grows */
-  min-width: 0; /* prevents overflow */
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 .emailInput {
@@ -30,6 +43,7 @@
   background: #fff;
   color: var(--color-text-main);
   text-align: center;
+  margin-top: 0.4rem;
 }
 
 .emailInput {
@@ -37,12 +51,78 @@
   min-width: 0;
 }
 
-.emailLabel {
+.inputRow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
+  max-width: 520px;
+}
+
+.inputRow input {
+  width: 100%;
+}
+
+.topRow {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  justify-content: center; /* centers label + input as a group */
+  gap: 1.25rem;
+}
+
+.messageRow {
+  margin-top: 1.25rem;
+}
+
+.emailLabel {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+/* Labels */
+/* .emailLabel, */
+.messageLabel {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+.messageInput {
+  margin-top: 0.4rem;
+  padding: 0.9rem 1.1rem;
+  border-radius: 20px;
+  border: none;
+  resize: vertical;
+  font-size: 0.95rem;
+  background: #fff;
+  color: var(--color-text-main);
+  text-align: center;
+}
+
+.messageRow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 680px;
+}
+
+.messageRow textarea {
+  width: 100%;
+  resize: vertical;
+}
+
+.buttonRow {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 0.5rem;
 }
 
 .emailButton {
@@ -82,22 +162,6 @@
   color: #b42318;
 }
 
-/* @media (max-width: 768px) {
-  .emailLayout {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .emailForm {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .emailButton {
-    width: 100%;
-    text-align: center;
-  }
-} */
-
 /* Mobile: stack input + button */
 @media (max-width: 768px) {
   .emailRow {
@@ -111,5 +175,9 @@
 
   .emailButton {
     width: 100%;
+  }
+  .topRow {
+    flex-direction: column;
+    align-items: stretch;
   }
 }

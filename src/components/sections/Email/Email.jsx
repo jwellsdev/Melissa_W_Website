@@ -4,6 +4,7 @@ import styles from "./Email.module.css";
 
 const FORM_NAME = "pr-collabs";
 
+// Netlify requires URL-encoded form data
 const encode = (data) =>
   Object.keys(data)
     .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`)
@@ -11,16 +12,18 @@ const encode = (data) =>
 
 const Email = ({ id }) => {
   const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
   const [botField, setBotField] = useState("");
   const [status, setStatus] = useState("idle"); // idle | submitting | success | error
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Honeypot filled => treat as spam; pretend success silently
+    // Honeypot filled → treat as spam, silently succeed
     if (botField) {
       setStatus("success");
       setEmail("");
+      setMessage("");
       setBotField("");
       return;
     }
@@ -31,6 +34,7 @@ const Email = ({ id }) => {
       const body = encode({
         "form-name": FORM_NAME,
         email,
+        message,
         "bot-field": botField,
       });
 
@@ -40,10 +44,13 @@ const Email = ({ id }) => {
         body,
       });
 
-      if (!res.ok) throw new Error(`Netlify form submit failed: ${res.status}`);
+      if (!res.ok) {
+        throw new Error(`Netlify form submit failed: ${res.status}`);
+      }
 
       setStatus("success");
       setEmail("");
+      setMessage("");
       setBotField("");
     } catch (err) {
       console.error(err);
@@ -66,10 +73,10 @@ const Email = ({ id }) => {
           className={styles.emailForm}
           onSubmit={handleSubmit}
         >
-          {/* required for Netlify */}
+          {/* Required for Netlify */}
           <input type="hidden" name="form-name" value={FORM_NAME} />
 
-          {/* honeypot (hidden via CSS) */}
+          {/* Honeypot (hidden via CSS) */}
           <p className={styles.honeypot}>
             <label>
               Don’t fill this out:
@@ -82,33 +89,51 @@ const Email = ({ id }) => {
             </label>
           </p>
 
-          <label className={styles.emailLabel}>
-            Email address
-            <input
-              type="email"
-              name="email"
-              className={styles.emailInput}
-              placeholder="yourname@email.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              disabled={status === "submitting" || status === "success"}
-            />
-          </label>
+          <div className={styles.formStack}>
+            {/* Row 1: Email */}
+            <div className={styles.inputRow}>
+              <label className={styles.emailLabel} htmlFor="email">
+                Email address
+              </label>
+              <input
+                id="email"
+                name="email"
+                className={styles.emailInput}
+                type="email"
+                placeholder="yourname@email.com"
+                required
+              />
+            </div>
 
-          <button
-            type="submit"
-            className={styles.emailButton}
-            disabled={status === "submitting" || status === "success"}
-          >
-            {status === "submitting" ? "SENDING..." : "EMAIL ME"}
-          </button>
+            {/* Row 2: Message */}
+            <div className={styles.messageRow}>
+              <label className={styles.messageLabel} htmlFor="message">
+                Message
+              </label>
+              <textarea
+                id="message"
+                name="message"
+                className={styles.messageInput}
+                placeholder="Write your message here..."
+                rows="5"
+                required
+              />
+            </div>
+
+            {/* Row 3: Button */}
+            <div className={styles.buttonRow}>
+              <button className={styles.emailButton} type="submit">
+                EMAIL ME
+              </button>
+            </div>
+          </div>
         </form>
       </div>
 
+      {/* Inline status messages */}
       {status === "success" && (
         <p className={styles.successMessage}>
-          Thanks — you’re all set! We’ll be in touch soon.
+          Thanks — your message has been sent!
         </p>
       )}
 
