@@ -69,7 +69,7 @@ const Email = ({ id }) => {
           name={FORM_NAME}
           method="POST"
           data-netlify="true"
-          netlify-honeypot="bot-field"
+          data-netlify-honeypot="bot-field"
           className={styles.emailForm}
           onSubmit={handleSubmit}
         >
@@ -102,6 +102,8 @@ const Email = ({ id }) => {
                 type="email"
                 placeholder="yourname@email.com"
                 required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
 
@@ -117,6 +119,8 @@ const Email = ({ id }) => {
                 placeholder="Write your message here..."
                 rows="5"
                 required
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
               />
             </div>
 
