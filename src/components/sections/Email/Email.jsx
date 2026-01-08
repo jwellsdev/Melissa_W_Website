@@ -4,6 +4,7 @@ import styles from "./Email.module.css";
 
 const FORM_NAME = "pr-collabs";
 
+// Netlify requires URL-encoded form data
 const encode = (data) =>
   Object.keys(data)
     .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`)
@@ -11,16 +12,18 @@ const encode = (data) =>
 
 const Email = ({ id }) => {
   const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
   const [botField, setBotField] = useState("");
   const [status, setStatus] = useState("idle"); // idle | submitting | success | error
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Honeypot filled => treat as spam; pretend success silently
+    // Honeypot filled → treat as spam, silently succeed
     if (botField) {
       setStatus("success");
       setEmail("");
+      setMessage("");
       setBotField("");
       return;
     }
@@ -31,6 +34,7 @@ const Email = ({ id }) => {
       const body = encode({
         "form-name": FORM_NAME,
         email,
+        message,
         "bot-field": botField,
       });
 
@@ -40,10 +44,13 @@ const Email = ({ id }) => {
         body,
       });
 
-      if (!res.ok) throw new Error(`Netlify form submit failed: ${res.status}`);
+      if (!res.ok) {
+        throw new Error(`Netlify form submit failed: ${res.status}`);
+      }
 
       setStatus("success");
       setEmail("");
+      setMessage("");
       setBotField("");
     } catch (err) {
       console.error(err);
@@ -57,31 +64,32 @@ const Email = ({ id }) => {
       title="PR AND COLLABS"
       subtitle="Get updates on new content, collabs, and recommendations."
     >
-      <div className={styles.emailRow}>
-        <form
-          name={FORM_NAME}
-          method="POST"
-          data-netlify="true"
-          netlify-honeypot="bot-field"
-          className={styles.emailForm}
-          onSubmit={handleSubmit}
-        >
-          {/* required for Netlify */}
-          <input type="hidden" name="form-name" value={FORM_NAME} />
+      <form
+        name={FORM_NAME}
+        method="POST"
+        data-netlify="true"
+        netlify-honeypot="bot-field"
+        className={styles.emailForm}
+        onSubmit={handleSubmit}
+      >
+        {/* Required for Netlify */}
+        <input type="hidden" name="form-name" value={FORM_NAME} />
 
-          {/* honeypot (hidden via CSS) */}
-          <p className={styles.honeypot}>
-            <label>
-              Don’t fill this out:
-              <input
-                name="bot-field"
-                value={botField}
-                onChange={(e) => setBotField(e.target.value)}
-                autoComplete="off"
-              />
-            </label>
-          </p>
+        {/* Honeypot (hidden via CSS) */}
+        <p className={styles.honeypot}>
+          <label>
+            Don’t fill this out:
+            <input
+              name="bot-field"
+              value={botField}
+              onChange={(e) => setBotField(e.target.value)}
+              autoComplete="off"
+            />
+          </label>
+        </p>
 
+        {/* ROW 1 — Email + Button */}
+        <div className={styles.topRow}>
           <label className={styles.emailLabel}>
             Email address
             <input
@@ -103,12 +111,30 @@ const Email = ({ id }) => {
           >
             {status === "submitting" ? "SENDING..." : "EMAIL ME"}
           </button>
-        </form>
-      </div>
+        </div>
 
+        {/* ROW 2 — Full-width Message */}
+        <div className={styles.messageRow}>
+          <label className={styles.messageLabel}>
+            Message
+            <textarea
+              name="message"
+              className={styles.messageInput}
+              placeholder="Write your message here..."
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              rows={5}
+              required
+              disabled={status === "submitting" || status === "success"}
+            />
+          </label>
+        </div>
+      </form>
+
+      {/* Inline status messages */}
       {status === "success" && (
         <p className={styles.successMessage}>
-          Thanks — you’re all set! We’ll be in touch soon.
+          Thanks — your message has been sent!
         </p>
       )}
 
