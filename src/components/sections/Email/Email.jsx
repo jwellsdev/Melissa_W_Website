@@ -64,72 +64,71 @@ const Email = ({ id }) => {
       title="PR AND COLLABS"
       subtitle="Get updates on new content, collabs, and recommendations."
     >
-      <form
-        name={FORM_NAME}
-        method="POST"
-        data-netlify="true"
-        netlify-honeypot="bot-field"
-        className={styles.emailForm}
-        onSubmit={handleSubmit}
-      >
-        {/* Required for Netlify */}
-        <input type="hidden" name="form-name" value={FORM_NAME} />
+      <div className={styles.emailRow}>
+        <form
+          name={FORM_NAME}
+          method="POST"
+          data-netlify="true"
+          netlify-honeypot="bot-field"
+          className={styles.emailForm}
+          onSubmit={handleSubmit}
+        >
+          {/* Required for Netlify */}
+          <input type="hidden" name="form-name" value={FORM_NAME} />
 
-        {/* Honeypot (hidden via CSS) */}
-        <p className={styles.honeypot}>
-          <label>
-            Don’t fill this out:
-            <input
-              name="bot-field"
-              value={botField}
-              onChange={(e) => setBotField(e.target.value)}
-              autoComplete="off"
-            />
-          </label>
-        </p>
+          {/* Honeypot (hidden via CSS) */}
+          <p className={styles.honeypot}>
+            <label>
+              Don’t fill this out:
+              <input
+                name="bot-field"
+                value={botField}
+                onChange={(e) => setBotField(e.target.value)}
+                autoComplete="off"
+              />
+            </label>
+          </p>
 
-        {/* ROW 1 — Email + Button */}
-        <div className={styles.topRow}>
-          <label className={styles.emailLabel}>
-            Email address
-            <input
-              type="email"
-              name="email"
-              className={styles.emailInput}
-              placeholder="yourname@email.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              disabled={status === "submitting" || status === "success"}
-            />
-          </label>
+          <div className={styles.formStack}>
+            {/* Row 1: Email */}
+            <div className={styles.inputRow}>
+              <label className={styles.emailLabel} htmlFor="email">
+                Email address
+              </label>
+              <input
+                id="email"
+                name="email"
+                className={styles.emailInput}
+                type="email"
+                placeholder="yourname@email.com"
+                required
+              />
+            </div>
 
-          <button
-            type="submit"
-            className={styles.emailButton}
-            disabled={status === "submitting" || status === "success"}
-          >
-            {status === "submitting" ? "SENDING..." : "EMAIL ME"}
-          </button>
-        </div>
+            {/* Row 2: Message */}
+            <div className={styles.messageRow}>
+              <label className={styles.messageLabel} htmlFor="message">
+                Message
+              </label>
+              <textarea
+                id="message"
+                name="message"
+                className={styles.messageInput}
+                placeholder="Write your message here..."
+                rows="5"
+                required
+              />
+            </div>
 
-        {/* ROW 2 — Full-width Message */}
-        <div className={styles.messageRow}>
-          <label className={styles.messageLabel}>
-            Message
-            <textarea
-              name="message"
-              className={styles.messageInput}
-              placeholder="Write your message here..."
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              rows={5}
-              required
-              disabled={status === "submitting" || status === "success"}
-            />
-          </label>
-        </div>
-      </form>
+            {/* Row 3: Button */}
+            <div className={styles.buttonRow}>
+              <button className={styles.emailButton} type="submit">
+                EMAIL ME
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
 
       {/* Inline status messages */}
       {status === "success" && (
